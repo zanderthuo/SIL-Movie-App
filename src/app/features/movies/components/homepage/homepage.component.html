@@ -1,0 +1,97 @@
+<div class="container-fluid bg-dark text-white min-vh-100 p-0"> <!-- Hero Section (unchanged) -->
+  <!-- Hero Section -->
+  <section class="position-relative"
+    [style.background-image]="'url(https://image.tmdb.org/t/p/original' + heroSectionContent.backdrop_path + ')'"
+    style="height:500px; background-size:cover; background-position:center; background-repeat:no-repeat;">
+
+    <!-- Overlay gradient -->
+    <div class="position-absolute w-100 h-100 top-0 start-0"
+      style="background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); z-index:1;"></div>
+
+    <!-- Hero content -->
+    <div class="position-relative h-100 d-flex align-items-end p-5" style="z-index:2;">
+      <div class="text-white">
+        <h2 class="display-4 font-weight-bold mb-2">{{ heroSectionContent.title }}</h2>
+        <div class="d-flex align-items-center">
+          <i class="bi bi-play-circle-fill text-warning me-2" style="font-size:3rem;"></i>
+          <div>
+            <div class="font-weight-semibold">{{ heroSectionContent.watchNowText }}</div>
+            <div class="text-sm text-muted">{{ heroSectionContent.duration }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Prev / Next buttons -->
+    <button class="btn btn-dark position-absolute top-50 start-0 translate-middle-y opacity-75 hover-opacity-100"
+      (click)="prevHero()" [disabled]="trendingIndex === 0">
+      <i class="bi bi-chevron-left"></i>
+    </button>
+    <button class="btn btn-dark position-absolute top-50 end-0 translate-middle-y opacity-75 hover-opacity-100"
+      (click)="nextHero()" [disabled]="trendingIndex === trendingMovies.length - 1">
+      <i class="bi bi-chevron-right"></i>
+    </button>
+  </section>
+
+
+  <!-- Popular Movies Section -->
+  <section class="p-5 position-relative">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <h3 class="h2 font-weight-bold">Popular</h3>
+      <a href="#" class="text-info text-decoration-none">See all &rarr;</a>
+    </div>
+    <div class="row">
+      <div *ngFor="let movie of popularMovies" class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
+        <app-movie-card
+          [movie]="movie"
+          [imageUrl]="'https://image.tmdb.org/t/p/original' + movie.backdrop_path"
+          (cardClick)="goToMovieDetails($event)"
+          >
+        </app-movie-card>
+      </div>
+    </div>
+    <!-- Navigation buttons -->
+    <div class="position-absolute w-100 top-50 start-0 d-flex justify-content-between px-3"
+      style="transform: translateY(-50%);">
+      <button class="btn btn-dark rounded-circle opacity-75 hover-opacity-100"
+        (click)="prevPopular()" [disabled]="popularPage === 0">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+      <button class="btn btn-dark rounded-circle opacity-75 hover-opacity-100"
+        (click)="nextPopular()"
+        [disabled]="(popularPage + 1) * pageSize >= allPopularMovies.length">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </section>
+  <!-- Top Rated Movies Section -->
+  <section class="p-5 position-relative">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <h3 class="h2 font-weight-bold">Top Rated</h3>
+      <a href="#" class="text-info text-decoration-none">See all &rarr;</a>
+    </div>
+    <div class="row">
+      <div *ngFor="let movie of topRatedMovies" class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
+        <app-movie-card
+          [movie]="movie"
+          [imageUrl]="'https://image.tmdb.org/t/p/original' + movie.backdrop_path"
+          (cardClick)="goToMovieDetails($event)"
+          >
+        </app-movie-card>
+      </div>
+    </div>
+    <!-- Navigation buttons -->
+    <div class="position-absolute w-100 top-50 start-0 d-flex justify-content-between px-3"
+      style="transform: translateY(-50%);">
+      <button class="btn btn-dark rounded-circle opacity-75 hover-opacity-100"
+        (click)="prevTopRated()" [disabled]="topRatedPage === 0">
+        <i class="bi bi-chevron-left"></i>
+      </button>
+      <button class="btn btn-dark rounded-circle opacity-75 hover-opacity-100"
+        (click)="nextTopRated()"
+        [disabled]="(topRatedPage + 1) * pageSize >= allTopRatedMovies.length">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </section>
+</div>
