@@ -6,13 +6,21 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideHttpClient } from '@angular/common/http';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { moviesReducer, popularMoviesReducer, topRatedMoviesReducer } from './features/movies/store/movies.reducer';
+import { MoviesEffects } from './features/movies/store/movies.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideStore(),
-    provideEffects(),
+    provideStore({
+      movies: moviesReducer,
+      popularMovies: popularMoviesReducer,
+      topRatedMovies: topRatedMoviesReducer,
+    }),
+    provideEffects([
+      MoviesEffects
+    ]),
     provideHttpClient(),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
 ]

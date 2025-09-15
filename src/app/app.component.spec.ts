@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],   // ✅ standalone component goes here
+      imports: [AppComponent], // ✅ since standalone
     }).compileComponents();
   });
 
@@ -20,10 +20,12 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('sil-movie-app');
   });
 
-  it('should render title', () => {
+  it('should render the layout component', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello This is the start of this Assessment');
+
+    // ✅ check that LayoutComponent (or its root HTML) exists
+    expect(compiled.querySelector('app-layout')).toBeTruthy();
   });
 });
