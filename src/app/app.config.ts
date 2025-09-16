@@ -6,7 +6,7 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideHttpClient } from '@angular/common/http';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { moviesReducer, popularMoviesReducer, topRatedMoviesReducer } from './features/movies/store/movies.reducer';
+import { movieCastDetailsReducer, movieCrewDetailsReducer, movieDetailsReducer, moviesReducer, popularMoviesReducer, topRatedMoviesReducer } from './features/movies/store/movies.reducer';
 import { MoviesEffects } from './features/movies/store/movies.effects';
 
 export const appConfig: ApplicationConfig = {
@@ -17,6 +17,9 @@ export const appConfig: ApplicationConfig = {
       movies: moviesReducer,
       popularMovies: popularMoviesReducer,
       topRatedMovies: topRatedMoviesReducer,
+      movieDetails: movieDetailsReducer,
+      movieCast: movieCastDetailsReducer,
+      movieCrew: movieCrewDetailsReducer
     }),
     provideEffects([
       MoviesEffects

@@ -56,3 +56,51 @@ export const selectTopRatedMoviesError = createSelector(
   selectTopRatedMoviesState,
   (state) => state.error
 );
+
+
+export const selectMovieDetailsState = createFeatureSelector<MoviesState>('movieDetails');
+
+export const selectMovieDetails = createSelector(
+  selectMovieDetailsState,
+  (state) => state.movie
+);
+
+export const selectMovieDetailsLoading = createSelector(
+  selectMovieDetailsState,
+  (state) => state.loading
+);
+
+export const selectMovieDetailsError = createSelector(
+  selectMovieDetailsState,
+  (state) => state.error
+);
+
+export const selectMovieCastDetails = createSelector(
+  selectMovieDetailsState,
+  (state) => (state.movie as any)?.credits?.cast || []
+);
+
+export const selectMovieCastLoading = createSelector(
+  selectMovieDetailsState,
+  (state) => state.loading
+);
+
+export const selectMovieCastError = createSelector(
+  selectMovieDetailsState,
+  (state) => state.error
+);
+
+export const selectMovieCrewDetails = createSelector(
+  selectMovieDetailsState,
+  (state) => (state.movie as any)?.credits?.crew || []
+);
+
+export const selectMovieCrewLoading = createSelector(
+  selectMovieDetailsState,
+  (state) => state.loading
+);
+
+export const selectMovieCrewError = createSelector(
+  selectMovieDetailsState,
+  (state) => state.error
+);

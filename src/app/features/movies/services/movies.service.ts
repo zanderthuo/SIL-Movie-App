@@ -29,4 +29,16 @@ export class MoviesService {
     );
   }
 
+  getMovieDetails(movieId: number): Observable<any> {
+    return this.http.get<any>(
+      `${this.apiUrl}/movie/${movieId}?api_key=${this.apiKey}&append_to_response=videos,credits`
+    );
+  }
+
+  getCastDetails(movieId: number): Observable<any> {
+    return this.http.get<any>(
+      `${this.apiUrl}/movie/${movieId}/credits?api_key=${this.apiKey}`
+    );
+  }
+
 }

@@ -40,3 +40,48 @@ export const loadTopRatedMoviesFailure = createAction(
   props<{ error: string }>()
 );
 
+
+export const loadMovieDetails = createAction(
+  '[Movies] Load Movie Details',
+  props<{ movieId: number }>()
+);
+
+export const loadMovieDetailsSuccess = createAction(
+  '[Movies] Load Movie Details Success',
+  props<{ movie: any }>()
+);
+
+export const loadMovieDetailsFailure = createAction(
+  '[Movies] Load Movie Details Failure',
+  props<{ error: string }>()
+);
+
+export const loadMovieCastDetails = createAction(
+  '[Movies] Load Movie Cast Details',
+  props<{ movieId: number }>()
+);
+
+export const loadMovieCastDetailsSuccess = createAction(
+  '[Movies] Load Movie Cast Details Success',
+  props<{ cast: any[] }>()
+);
+
+export const loadMovieCastDetailsFailure = createAction(
+  '[Movies] Load Movie Cast Details Failure',
+  props<{ error: string }>()
+);
+
+export const loadMovieCrewDetails = createAction(
+  '[Movies] Load Movie Crew Details',
+  props<{ movieId: number }>()
+);
+
+export const loadMovieCrewDetailsSuccess = createAction(
+  '[Movies] Load Movie Crew Details Success',
+  props<{ crew: any[] }>()
+);
+
+export const loadMovieCrewDetailsFailure = createAction(
+  '[Movies] Load Movie Crew Details Failure',
+  props<{ error: string }>()
+);

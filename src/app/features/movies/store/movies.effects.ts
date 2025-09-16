@@ -57,4 +57,52 @@ export class MoviesEffects {
       )
     )
   );
+
+  loadMovieDetails$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MoviesActions.loadMovieDetails),
+      mergeMap((action) =>
+        this.moviesService.getMovieDetails(action.movieId).pipe(
+          map((movie) =>
+            MoviesActions.loadMovieDetailsSuccess({ movie })
+          ),
+          catchError((err) =>
+            of(MoviesActions.loadMovieDetailsFailure({ error: err.message }))
+          )
+        )
+      )
+    )
+  );
+
+  loadMovieCastDetails$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MoviesActions.loadMovieCastDetails),
+      mergeMap((action) =>
+        this.moviesService.getCastDetails(action.movieId).pipe(
+          map((cast) =>
+            MoviesActions.loadMovieCastDetailsSuccess({ cast })
+          ),
+          catchError((err) =>
+            of(MoviesActions.loadMovieCastDetailsFailure({ error: err.message }))
+          )
+        )
+      )
+    )
+  );
+
+  loadMovieCrewDetails$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MoviesActions.loadMovieCrewDetails),
+      mergeMap((action) =>
+        this.moviesService.getCastDetails(action.movieId).pipe(
+          map((crew) =>
+            MoviesActions.loadMovieCrewDetailsSuccess({ crew })
+          ),
+          catchError((err) =>
+            of(MoviesActions.loadMovieCrewDetailsFailure({ error: err.message }))
+          )
+        )
+      )
+    )
+  );
 }
