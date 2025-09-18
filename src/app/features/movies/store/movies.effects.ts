@@ -105,4 +105,21 @@ export class MoviesEffects {
       )
     )
   );
+
+  searchMovies$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MoviesActions.searchMovies),
+      mergeMap((action) =>
+        this.moviesService.searchMovies(action.query).pipe(
+          map((res) =>
+            MoviesActions.searchMoviesSuccess({ movies: res.results })
+          ),
+          catchError((err) =>
+            of(MoviesActions.searchMoviesFailure({ error: err.message }))
+          )
+        )
+      )
+    )
+  );
+
 }

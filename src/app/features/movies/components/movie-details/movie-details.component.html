@@ -47,6 +47,7 @@
       <img [src]="'https://image.tmdb.org/t/p/original' + movie.backdrop_path"
         class="img-fluid w-100 h-100 rounded shadow" alt="{{ movie?.title }}"
         style="object-fit:cover; object-position:center; position:absolute; top:0; left:0;">
+
     </section>
     <div class="container mt-4 mb-4 d-flex flex-column align-items-start">
       <!-- Genre Pills -->
@@ -66,30 +67,51 @@
     </div>
 
     <!-- Cast -->
-    <div class="container py-4">
-      <h5>Top Cast</h5>
-      <div class="row">
-        <div class="col-md-2 col-6 mb-4 text-center" *ngFor="let cast of cast$ | async">
-          <img [src]="'https://image.tmdb.org/t/p/w200' + cast.profile_path" class="rounded-circle img-fluid mb-2"
-            style="width:80px; height:80px; object-fit:cover;" alt="{{ cast.name }}" />
-          <p class="mb-0 fw-bold">{{ cast.character }}</p>
-          <p class="small mb-0">{{ cast.name }}</p>
-        </div>
-      </div>
+<div class="container py-4">
+  <h5>Top Cast</h5>
+  <div class="row">
+    <div
+      class="col-md-2 col-6 mb-4 text-center"
+      *ngFor="let cast of (cast$ | async)?.slice(0, showAllCast ? undefined : 10)"
+    >
+      <img
+        [src]="getProfileImage(cast.profile_path)"
+        class="rounded-circle img-fluid mb-2"
+        style="width:80px; height:80px; object-fit:cover;"
+        alt="{{ cast.name }}"
+      />
+      <p class="mb-0 fw-bold">{{ cast.character }}</p>
+      <p class="small mb-0">{{ cast.name }}</p>
     </div>
+  </div>
+  <button class="btn btn-outline-info btn-sm" (click)="toggleCast()">
+    {{ showAllCast ? 'Show Less' : 'Show More' }}
+  </button>
+</div>
+
 
     <!-- Crew -->
-    <div class="container py-4">
-      <h5>Crew</h5>
-      <div class="row">
-        <div class="col-md-2 col-6 mb-4 text-center" *ngFor="let member of crew$ | async">
-          <img *ngIf="member.profile_path" [src]="'https://image.tmdb.org/t/p/w200' + member.profile_path"
-            class="rounded-circle img-fluid mb-2" style="width:80px; height:80px; object-fit:cover;"
-            alt="{{ member.name }}" />
-          <p class="mb-0 fw-bold">{{ member.name }}</p>
-          <p class="small text-muted mb-0">{{ member.job }}</p>
-        </div>
-      </div>
+<div class="container py-4">
+  <h5>Crew</h5>
+  <div class="row">
+    <div
+      class="col-md-2 col-6 mb-4 text-center"
+      *ngFor="let member of (crew$ | async)?.slice(0, showAllCrew ? undefined : 10)"
+    >
+      <img
+        [src]="getProfileImage(member.profile_path)"
+        class="rounded-circle img-fluid mb-2"
+        style="width:80px; height:80px; object-fit:cover;"
+        alt="{{ member.name }}"
+      />
+      <p class="mb-0 fw-bold">{{ member.name }}</p>
+      <p class="small text-muted mb-0">{{ member.job }}</p>
     </div>
+  </div>
+  <button class="btn btn-outline-info btn-sm" (click)="toggleCrew()">
+    {{ showAllCrew ? 'Show Less' : 'Show More' }}
+  </button>
+</div>
+
   </ng-container>
 </div>

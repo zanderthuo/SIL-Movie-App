@@ -1,21 +1,33 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
     <!-- IMDb Logo -->
-    <a class="navbar-brand bg-warning text-dark fw-bold px-2 rounded" href="#">
+    <a class="navbar-brand bg-warning text-dark fw-bold px-2 rounded" href="/">
       IdMB
     </a>
 
     <!-- Toggler for mobile -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarContent"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="navbarContent">
       <!-- Search Bar -->
-      <form class="d-flex mx-lg-auto my-2 my-lg-0 flex-grow-1">
+      <form
+        class="d-flex mx-lg-auto my-2 my-lg-0 flex-grow-1"
+        (submit)="onSearchSubmit($event)"
+      >
         <div class="input-group w-100">
-          <button class="btn btn-outline-secondary dropdown-toggle bg-light" type="button" data-bs-toggle="dropdown">
+          <button
+            class="btn btn-outline-secondary dropdown-toggle bg-light"
+            type="button"
+            data-bs-toggle="dropdown"
+          >
             All
           </button>
           <ul class="dropdown-menu">
@@ -23,12 +35,36 @@
             <li><a class="dropdown-item" href="#">TV Shows</a></li>
             <li><a class="dropdown-item" href="#">Celebrities</a></li>
           </ul>
-          <input type="search" class="form-control" placeholder="Search IMDb" aria-label="Search" />
+          <input
+            type="search"
+            class="form-control"
+            placeholder="Search IdMB"
+            [(ngModel)]="searchQuery"
+            name="search"
+          />
           <button class="btn btn-outline-light" type="submit">
             <i class="bi bi-search"></i>
           </button>
         </div>
       </form>
+
+      <!-- Search results dropdown -->
+      <ng-container *ngIf="searchResults$ | async as results">
+  <div *ngIf="results.length" class="position-absolute bg-dark text-white mt-2 rounded w-50 p-2">
+    <div
+      *ngFor="let movie of results"
+      class="p-2 border-bottom search-item"
+      (click)="goToMovieDetails(movie)"
+      style="cursor: pointer"
+    >
+      {{ movie.title || movie.name }}
+    </div>
+    <button class="btn btn-sm btn-outline-warning mt-2" (click)="clearSearch()">
+      Clear
+    </button>
+  </div>
+</ng-container>
+
 
       <!-- Right Menu -->
       <ul class="navbar-nav ms-lg-3">
@@ -36,7 +72,7 @@
           <a href="#" class="nav-link text-white">Watchlist</a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link text-white">Sign in</a>
+          <a href='/signin' class="nav-link text-white">Sign in</a>
         </li>
       </ul>
     </div>

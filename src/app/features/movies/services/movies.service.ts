@@ -41,4 +41,12 @@ export class MoviesService {
     );
   }
 
+  searchMovies(query: string, page = 1): Observable<MovieResponse> {
+    return this.http.get<MovieResponse>(
+      `${this.apiUrl}/search/movie?api_key=${this.apiKey}&query=${encodeURIComponent(
+        query
+      )}&page=${page}`
+    );
+  }
+
 }

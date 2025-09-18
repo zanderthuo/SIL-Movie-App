@@ -85,3 +85,20 @@ export const loadMovieCrewDetailsFailure = createAction(
   '[Movies] Load Movie Crew Details Failure',
   props<{ error: string }>()
 );
+
+export const searchMovies = createAction(
+  '[Movies] Search Movies',
+  props<{ query: string }>()
+);
+
+export const searchMoviesSuccess = createAction(
+  '[Movies] Search Movies Success',
+  props<{ movies: Movie[] }>()
+);
+
+export const searchMoviesFailure = createAction(
+  '[Movies] Search Movies Failure',
+  props<{ error: string }>()
+);
+
+export const clearSearchResults = createAction('[Movies] Clear Search Results');

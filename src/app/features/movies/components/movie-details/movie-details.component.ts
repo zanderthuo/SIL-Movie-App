@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Cast, Crew, Movie } from '../../../../core/models/movie.model';
@@ -14,12 +14,18 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './movie-details.component.css'
 })
 export class MovieDetailsComponent {
+  private store = inject(Store);
+  private route = inject(ActivatedRoute);
+
   movie$!: Observable<Movie | null>;
   cast$!: Observable<Cast[]>;
   crew$!: Observable<Crew[]>;
   loading$!: Observable<boolean>;
 
-  constructor(private store: Store, private route: ActivatedRoute) { }
+  showAllCast = false;
+  showAllCrew = false;
+
+  defaultAvatar = 'assets/avatar.jpg'; // 👈 put a placeholder in assets
 
   ngOnInit(): void {
     const movieId = this.route.snapshot.paramMap.get('id');
@@ -34,4 +40,16 @@ export class MovieDetailsComponent {
     this.crew$ = this.store.select(selectMovieCrewDetails);
     this.loading$ = this.store.select(selectMoviesLoading);
   }
+
+  toggleCast() {
+    this.showAllCast = !this.showAllCast;
+  }
+
+  toggleCrew() {
+    this.showAllCrew = !this.showAllCrew;
+  }
+
+  getProfileImage(path: string | null | undefined): string {
+  return path ? 'https://image.tmdb.org/t/p/w200' + path : this.defaultAvatar;
+}
 }

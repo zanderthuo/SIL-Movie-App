@@ -104,3 +104,20 @@ export const selectMovieCrewError = createSelector(
   selectMovieDetailsState,
   (state) => state.error
 );
+
+export const selectSearchResultsState = createFeatureSelector<MoviesState>('movieSearchResults');
+
+export const selectAllSearchResults = createSelector(
+  selectSearchResultsState,
+  (state) => state.movies
+);
+
+export const selectSearchResultsLoading = createSelector(
+  selectSearchResultsState,
+  (state) => state.loading
+);
+
+export const selectSearchResultsError = createSelector(
+  selectSearchResultsState,
+  (state) => state.error
+);

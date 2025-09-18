@@ -1,0 +1,48 @@
+<div class="container-fluid bg-light min-vh-100 d-flex flex-column justify-content-center align-items-center">
+  <!-- IMDb Logo -->
+  <div class="mb-3">
+    <a class="navbar-brand bg-warning text-dark fw-bold px-5 rounded" href="#">
+      IdMB
+    </a>
+  </div>
+
+  <!-- Form Card -->
+  <div class="card shadow-sm" style="width: 350px;">
+    <div class="card-body">
+      <h5 class="card-title mb-3 text-center">Sign in</h5>
+
+      <form (ngSubmit)="onLogin()">
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" [(ngModel)]="loginData.email" name="email" required>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" [(ngModel)]="loginData.password" name="password" required>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-grid">
+          <button type="submit" class="btn btn-warning">Sign in</button>
+        </div>
+      </form>
+
+      <div class="text-center mt-3">
+        <small>New to IMDb? <a routerLink="/signup">Create your IMDb account</a></small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-4 text-center">
+    <small>
+      <a href="#">Help</a> •
+      <a href="#">Conditions of Use</a> •
+      <a href="#">Privacy Notice</a><br>
+      © 1996-2025, Amazon.com, Inc. or its affiliates
+    </small>
+  </footer>
+</div>

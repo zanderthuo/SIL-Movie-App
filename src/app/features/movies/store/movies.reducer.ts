@@ -177,3 +177,28 @@ export const movieCrewDetailsReducer = createReducer(
     error,
   }))
 );
+
+export const searchMoviesReducer = createReducer(
+  initialState,
+
+  // Start searching movies
+  on(MoviesActions.searchMovies, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  // Success
+  on(MoviesActions.searchMoviesSuccess, (state, { movies }) => ({
+    ...state,
+    movies,
+    loading: false,
+  })),
+
+  // Failure
+  on(MoviesActions.searchMoviesFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  }))
+);
