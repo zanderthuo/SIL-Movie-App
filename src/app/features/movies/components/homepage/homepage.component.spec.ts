@@ -24,10 +24,20 @@ describe('HomepageComponent', () => {
     { id: 3, title: 'Movie 3', overview: '...', backdrop_path: '/path3.jpg' }
   ];
 
+  const initialState = {
+    movies: {
+      movies: [],        // trending movies
+      popular: [],       // popular movies
+      topRated: [],      // top rated movies
+      loading: false,
+      error: null
+    }
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HomepageComponent],
-      providers: [provideMockStore()]
+      providers: [provideMockStore({ initialState })]  // ✅ supply state
     }).compileComponents();
 
     store = TestBed.inject(MockStore);
@@ -35,6 +45,8 @@ describe('HomepageComponent', () => {
       MoviesSelectors.selectAllMovies,
       []
     );
+    store.overrideSelector(MoviesSelectors.selectAllPopularMovies, []);
+    store.overrideSelector(MoviesSelectors.selectAllTopRatedMovies, []);
     store.overrideSelector(MoviesSelectors.selectMoviesLoading, false);
     store.overrideSelector(MoviesSelectors.selectMoviesError, null);
 
@@ -42,15 +54,19 @@ describe('HomepageComponent', () => {
     component = fixture.componentInstance;
   });
 
+
   it('should create', () => {
     fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 
-  it('should dispatch loadMovies on init', () => {
+  it('should dispatch load actions on init', () => {
     const dispatchSpy = spyOn(store, 'dispatch');
     fixture.detectChanges();
+
     expect(dispatchSpy).toHaveBeenCalledWith(MoviesActions.loadMovies());
+    expect(dispatchSpy).toHaveBeenCalledWith(MoviesActions.loadMorePopularMovies());
+    expect(dispatchSpy).toHaveBeenCalledWith(MoviesActions.loadTopRatedMovies());
   });
 
   it('should update trending movies and hero content when store provides movies', () => {

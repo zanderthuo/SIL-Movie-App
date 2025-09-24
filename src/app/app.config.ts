@@ -6,13 +6,22 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideHttpClient } from '@angular/common/http';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { movieCastDetailsReducer, movieCrewDetailsReducer, movieDetailsReducer, moviesReducer, popularMoviesReducer, searchMoviesReducer, topRatedMoviesReducer } from './features/movies/store/movies.reducer';
+import {
+  movieCastDetailsReducer,
+  movieCrewDetailsReducer,
+  movieDetailsReducer,
+  moviesReducer,
+  popularMoviesReducer,
+  searchMoviesReducer,
+  topRatedMoviesReducer,
+} from './features/movies/store/movies.reducer';
 import { MoviesEffects } from './features/movies/store/movies.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
+
     provideStore({
       movies: moviesReducer,
       popularMovies: popularMoviesReducer,
@@ -20,12 +29,13 @@ export const appConfig: ApplicationConfig = {
       movieDetails: movieDetailsReducer,
       movieCast: movieCastDetailsReducer,
       movieCrew: movieCrewDetailsReducer,
-      searchMovie: searchMoviesReducer
+      searchMovie: searchMoviesReducer,
     }),
-    provideEffects([
-      MoviesEffects
-    ]),
+
+    provideEffects([MoviesEffects]),
+
     provideHttpClient(),
-    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
-]
+
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
+  ],
 };

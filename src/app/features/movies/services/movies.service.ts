@@ -3,11 +3,19 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { MovieResponse } from '../../../core/models/movie-response.model';
 import { Observable } from 'rxjs';
+import { Cast, Crew, Movie } from '../../../core/models/movie.model';
+
+export interface MovieCreditsResponse {
+  id: number;
+  cast: Cast[];
+  crew: Crew[];
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class MoviesService {
+
   private http = inject(HttpClient);
   private apiUrl = environment.apiUrl;
   private apiKey = environment.apiKey;
@@ -29,14 +37,14 @@ export class MoviesService {
     );
   }
 
-  getMovieDetails(movieId: number): Observable<any> {
-    return this.http.get<any>(
+  getMovieDetails(movieId: number): Observable<Movie> {
+    return this.http.get<Movie>(
       `${this.apiUrl}/movie/${movieId}?api_key=${this.apiKey}&append_to_response=videos,credits`
     );
   }
 
-  getCastDetails(movieId: number): Observable<any> {
-    return this.http.get<any>(
+  getCastDetails(movieId: number): Observable<Cast> {
+    return this.http.get<Cast>(
       `${this.apiUrl}/movie/${movieId}/credits?api_key=${this.apiKey}`
     );
   }

@@ -1,19 +1,28 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Cast, Crew, Movie } from '../../../../core/models/movie.model';
-import { loadMovieDetails, loadMovieCastDetails, loadMovieCrewDetails } from '../../store/movies.actions';
-import { selectMovieCastDetails, selectMovieCrewDetails, selectMovieDetails, selectMoviesLoading } from '../../store/movies.selectors';
+import {
+  loadMovieDetails,
+  loadMovieCastDetails,
+  loadMovieCrewDetails,
+} from '../../store/movies.actions';
+import {
+  selectMovieCastDetails,
+  selectMovieCrewDetails,
+  selectMovieDetails,
+  selectMoviesLoading,
+} from '../../store/movies.selectors';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-movie-details',
   imports: [CommonModule],
   templateUrl: './movie-details.component.html',
-  styleUrl: './movie-details.component.css'
+  styleUrl: './movie-details.component.css',
 })
-export class MovieDetailsComponent {
+export class MovieDetailsComponent implements OnInit{
   private store = inject(Store);
   private route = inject(ActivatedRoute);
 
@@ -24,8 +33,6 @@ export class MovieDetailsComponent {
 
   showAllCast = false;
   showAllCrew = false;
-
-  defaultAvatar = 'assets/avatar.jpg'; // 👈 put a placeholder in assets
 
   ngOnInit(): void {
     const movieId = this.route.snapshot.paramMap.get('id');
@@ -49,7 +56,24 @@ export class MovieDetailsComponent {
     this.showAllCrew = !this.showAllCrew;
   }
 
-  getProfileImage(path: string | null | undefined): string {
-  return path ? 'https://image.tmdb.org/t/p/w200' + path : this.defaultAvatar;
+  getProfileImage(path: string | null | undefined): string | null {
+    return path ? 'https://image.tmdb.org/t/p/w200' + path : null;
+  }
+
+  getInitials(name: string | undefined): string {
+    if (!name) return '';
+    return name
+      .split(' ')
+      .map((part) => part[0])
+      .join('')
+      .substring(0, 2)
+      .toUpperCase();
+  }
+  getRuntimeDisplay(runtime?: number | string): string {
+    if (!runtime) return '';
+    const r = Number(runtime);
+    if (isNaN(r)) return '';
+    return `${Math.floor(r / 60)}h ${r % 60}min`;
+  }
 }
-}
+

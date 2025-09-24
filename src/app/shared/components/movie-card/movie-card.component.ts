@@ -11,7 +11,7 @@ import { Movie } from '../../../core/models/movie.model';
 })
 export class MovieCardComponent {
   @Input() movie: Movie | null = null;
-  @Input() imageUrl: string = '';
+  @Input() imageUrl = '';
   @Output() cardClick = new EventEmitter<Movie>();
 
   onCardClick() {

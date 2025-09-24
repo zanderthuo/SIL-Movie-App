@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { MoviesState } from './movies.reducer';
+import { Movie } from '../../../core/models/movie.model';
 
 // Feature key
 export const selectMoviesState =
@@ -62,7 +63,7 @@ export const selectMovieDetailsState = createFeatureSelector<MoviesState>('movie
 
 export const selectMovieDetails = createSelector(
   selectMovieDetailsState,
-  (state) => state.movie
+  (state): Movie | null => state.movie
 );
 
 export const selectMovieDetailsLoading = createSelector(
@@ -77,7 +78,7 @@ export const selectMovieDetailsError = createSelector(
 
 export const selectMovieCastDetails = createSelector(
   selectMovieDetailsState,
-  (state) => (state.movie as any)?.credits?.cast || []
+  (state) => (state.movie as Movie)?.credits?.cast || []
 );
 
 export const selectMovieCastLoading = createSelector(
@@ -92,7 +93,7 @@ export const selectMovieCastError = createSelector(
 
 export const selectMovieCrewDetails = createSelector(
   selectMovieDetailsState,
-  (state) => (state.movie as any)?.credits?.crew || []
+  (state) => (state.movie as Movie)?.credits?.crew || []
 );
 
 export const selectMovieCrewLoading = createSelector(

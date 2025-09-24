@@ -7,7 +7,7 @@
         <h2 class="mb-0">{{ movie?.title }}</h2>
         <small class="fw-bold">
           {{ movie?.release_date }} • {{ movie?.adult ? '18' : 'PG' }} •
-          {{ movie?.runtime ? (movie.runtime / 60 | number:'1.0-0') + 'h ' + (movie.runtime % 60) + 'min' : '' }}
+          {{ getRuntimeDisplay(movie?.runtime) }}
         </small>
       </div>
 
@@ -17,7 +17,8 @@
         <div class="text-center">
           <div class="d-flex align-items-center justify-content-center gap-2">
             <i class="bi bi-star-fill text-warning"></i>
-            <span class="fw-bold">{{ movie?.vote_average | number:'1.0-0' }}</span><small>/10</small>
+            <span class="fw-bold">{{ movie?.vote_average | number:'1.0-0' }}</span>
+            <small>/10</small>
           </div>
           <small class="fw-bold">{{ movie?.imdbVotes }} votes</small>
         </div>
@@ -43,16 +44,22 @@
     </div>
 
     <!-- Hero Section (poster + backdrop) -->
-    <section class="position-relative" style="height:500px; margin-top:16px;">
-      <img [src]="'https://image.tmdb.org/t/p/original' + movie.backdrop_path"
-        class="img-fluid w-100 h-100 rounded shadow" alt="{{ movie?.title }}"
-        style="object-fit:cover; object-position:center; position:absolute; top:0; left:0;">
-
+    <section class="position-relative" style="height: 500px; margin-top: 16px">
+      <img
+        [src]="'https://image.tmdb.org/t/p/original' + movie.backdrop_path"
+        class="img-fluid w-100 h-100 rounded shadow"
+        alt="{{ movie?.title }}"
+        style="object-fit: cover; object-position: center; position: absolute; top: 0; left: 0"
+      />
     </section>
+
     <div class="container mt-4 mb-4 d-flex flex-column align-items-start">
       <!-- Genre Pills -->
       <div class="mb-2">
-        <span *ngFor="let genre of movie?.genres" class="badge rounded-pill border border-white text-white me-2">
+        <span
+          *ngFor="let genre of movie?.genres"
+          class="badge rounded-pill border border-white text-white me-2"
+        >
           {{ genre.name }}
         </span>
       </div>
@@ -67,51 +74,69 @@
     </div>
 
     <!-- Cast -->
-<div class="container py-4">
-  <h5>Top Cast</h5>
-  <div class="row">
-    <div
-      class="col-md-2 col-6 mb-4 text-center"
-      *ngFor="let cast of (cast$ | async)?.slice(0, showAllCast ? undefined : 10)"
-    >
-      <img
-        [src]="getProfileImage(cast.profile_path)"
-        class="rounded-circle img-fluid mb-2"
-        style="width:80px; height:80px; object-fit:cover;"
-        alt="{{ cast.name }}"
-      />
-      <p class="mb-0 fw-bold">{{ cast.character }}</p>
-      <p class="small mb-0">{{ cast.name }}</p>
+    <div class="container py-4">
+      <h5>Top Cast</h5>
+      <div class="row">
+        <div
+          class="col-md-2 col-6 mb-4 text-center"
+          *ngFor="let cast of (cast$ | async)?.slice(0, showAllCast ? undefined : 10)"
+        >
+          <ng-container *ngIf="getProfileImage(cast.profile_path); else initialsCast">
+            <img
+              [src]="getProfileImage(cast.profile_path)"
+              class="rounded-circle img-fluid mb-2"
+              style="width: 80px; height: 80px; object-fit: cover"
+              alt="{{ cast.name }}"
+            />
+          </ng-container>
+          <ng-template #initialsCast>
+            <div
+              class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center mb-2"
+              style="width: 80px; height: 80px; font-size: 24px; font-weight: bold"
+            >
+              {{ getInitials(cast.name) }}
+            </div>
+          </ng-template>
+          <p class="mb-0 fw-bold">{{ cast.character }}</p>
+          <p class="small mb-0">{{ cast.name }}</p>
+        </div>
+      </div>
+      <button class="btn btn-outline-info btn-sm" (click)="toggleCast()">
+        {{ showAllCast ? 'Show Less' : 'Show More' }}
+      </button>
     </div>
-  </div>
-  <button class="btn btn-outline-info btn-sm" (click)="toggleCast()">
-    {{ showAllCast ? 'Show Less' : 'Show More' }}
-  </button>
-</div>
-
 
     <!-- Crew -->
-<div class="container py-4">
-  <h5>Crew</h5>
-  <div class="row">
-    <div
-      class="col-md-2 col-6 mb-4 text-center"
-      *ngFor="let member of (crew$ | async)?.slice(0, showAllCrew ? undefined : 10)"
-    >
-      <img
-        [src]="getProfileImage(member.profile_path)"
-        class="rounded-circle img-fluid mb-2"
-        style="width:80px; height:80px; object-fit:cover;"
-        alt="{{ member.name }}"
-      />
-      <p class="mb-0 fw-bold">{{ member.name }}</p>
-      <p class="small text-muted mb-0">{{ member.job }}</p>
+    <div class="container py-4">
+      <h5>Crew</h5>
+      <div class="row">
+        <div
+          class="col-md-2 col-6 mb-4 text-center"
+          *ngFor="let member of (crew$ | async)?.slice(0, showAllCrew ? undefined : 10)"
+        >
+          <ng-container *ngIf="getProfileImage(member.profile_path); else initialsCrew">
+            <img
+              [src]="getProfileImage(member.profile_path)"
+              class="rounded-circle img-fluid mb-2"
+              style="width: 80px; height: 80px; object-fit: cover"
+              alt="{{ member.name }}"
+            />
+          </ng-container>
+          <ng-template #initialsCrew>
+            <div
+              class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center mb-2"
+              style="width: 80px; height: 80px; font-size: 24px; font-weight: bold"
+            >
+              {{ getInitials(member.name) }}
+            </div>
+          </ng-template>
+          <p class="mb-0 fw-bold">{{ member.name }}</p>
+          <p class="small text-muted mb-0">{{ member.job }}</p>
+        </div>
+      </div>
+      <button class="btn btn-outline-info btn-sm" (click)="toggleCrew()">
+        {{ showAllCrew ? 'Show Less' : 'Show More' }}
+      </button>
     </div>
-  </div>
-  <button class="btn btn-outline-info btn-sm" (click)="toggleCrew()">
-    {{ showAllCrew ? 'Show Less' : 'Show More' }}
-  </button>
-</div>
-
   </ng-container>
 </div>

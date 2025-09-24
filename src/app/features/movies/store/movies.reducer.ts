@@ -1,9 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
 import * as MoviesActions from './movies.actions';
-import { Movie } from '../../../core/models/movie.model';
+import { Cast, Crew, Movie } from '../../../core/models/movie.model';
 
 export interface MoviesState {
-  movie: any;
+  movie: Movie;
   movies: Movie[];
   loading: boolean;
   error: string | null;
@@ -11,7 +11,10 @@ export interface MoviesState {
 
 export const initialState: MoviesState = {
   movies: [],
-  movie: {},
+  movie: {
+    id: 0,
+    credits: undefined
+  },
   loading: false,
   error: null,
 };
@@ -93,7 +96,7 @@ export const topRatedMoviesReducer = createReducer(
 
 export const movieDetailsReducer = createReducer(
   {
-    movie: null as any,
+    movie: null as Movie | null,
     loading: false,
     error: null as string | null,
   },
@@ -122,7 +125,7 @@ export const movieDetailsReducer = createReducer(
 
 export const movieCastDetailsReducer = createReducer(
   {
-    cast: [] as any[],
+    cast: [] as Cast[],
     loading: false,
     error: null as string | null,
   },
@@ -151,7 +154,7 @@ export const movieCastDetailsReducer = createReducer(
 
 export const movieCrewDetailsReducer = createReducer(
   {
-    crew: [] as any[],
+    crew: [] as Crew[],
     loading: false,
     error: null as string | null,
   },

@@ -1,5 +1,9 @@
 export interface Movie {
   id: number;
+  credits?: {
+    cast: Cast[];
+    crew: Crew[];
+  };
   title?: string;
   adult?: boolean;
   name?: string;
@@ -9,7 +13,7 @@ export interface Movie {
   genre_ids?: number[];
   year?: number;
   rating?: number ;
-  runtime?: any;
+  runtime?: number | string;
   original_language?: string;
   description?: string;
   poster?: string;
@@ -32,6 +36,8 @@ export interface Movie {
 }
 
 export interface Cast {
+  crew: Crew[];
+  cast: Cast[];
   adult?: boolean;
   gender?: number;
   id?: number;
@@ -60,3 +66,4 @@ export interface Crew {
   department?: string;
   job?: string;
 }
+
