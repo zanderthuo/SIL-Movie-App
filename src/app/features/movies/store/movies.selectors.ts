@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { MoviesState } from './movies.reducer';
+import { Movie } from '../../../core/models/movie.model';
 
 // Feature key
 export const selectMoviesState =
@@ -54,5 +55,70 @@ export const selectTopRatedMoviesLoading = createSelector(
 
 export const selectTopRatedMoviesError = createSelector(
   selectTopRatedMoviesState,
+  (state) => state.error
+);
+
+
+export const selectMovieDetailsState = createFeatureSelector<MoviesState>('movieDetails');
+
+export const selectMovieDetails = createSelector(
+  selectMovieDetailsState,
+  (state): Movie | null => state.movie
+);
+
+export const selectMovieDetailsLoading = createSelector(
+  selectMovieDetailsState,
+  (state) => state.loading
+);
+
+export const selectMovieDetailsError = createSelector(
+  selectMovieDetailsState,
+  (state) => state.error
+);
+
+export const selectMovieCastDetails = createSelector(
+  selectMovieDetailsState,
+  (state) => (state.movie as Movie)?.credits?.cast || []
+);
+
+export const selectMovieCastLoading = createSelector(
+  selectMovieDetailsState,
+  (state) => state.loading
+);
+
+export const selectMovieCastError = createSelector(
+  selectMovieDetailsState,
+  (state) => state.error
+);
+
+export const selectMovieCrewDetails = createSelector(
+  selectMovieDetailsState,
+  (state) => (state.movie as Movie)?.credits?.crew || []
+);
+
+export const selectMovieCrewLoading = createSelector(
+  selectMovieDetailsState,
+  (state) => state.loading
+);
+
+export const selectMovieCrewError = createSelector(
+  selectMovieDetailsState,
+  (state) => state.error
+);
+
+export const selectSearchResultsState = createFeatureSelector<MoviesState>('movieSearchResults');
+
+export const selectAllSearchResults = createSelector(
+  selectSearchResultsState,
+  (state) => state.movies
+);
+
+export const selectSearchResultsLoading = createSelector(
+  selectSearchResultsState,
+  (state) => state.loading
+);
+
+export const selectSearchResultsError = createSelector(
+  selectSearchResultsState,
   (state) => state.error
 );

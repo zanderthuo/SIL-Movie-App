@@ -1,8 +1,11 @@
-<div class="container-fluid bg-dark text-white min-vh-100 p-0"> <!-- Hero Section (unchanged) -->
+<div class="container-fluid bg-dark text-white min-vh-100 p-0">
   <!-- Hero Section -->
-  <section class="position-relative"
-    [style.background-image]="'url(https://image.tmdb.org/t/p/original' + heroSectionContent.backdrop_path + ')'"
-    style="height:500px; background-size:cover; background-position:center; background-repeat:no-repeat;">
+  <section class="position-relative" style="height:700px; overflow:hidden;">
+    <!-- Hero image -->
+    <img [src]="'https://image.tmdb.org/t/p/original' + heroSectionContent.backdrop_path"
+      alt="{{ heroSectionContent.title }}" class="w-100 h-100 position-absolute top-0 start-0"
+      style="object-fit: contain; object-position: center; background-color: black; z-index:0;" />
+
 
     <!-- Overlay gradient -->
     <div class="position-absolute w-100 h-100 top-0 start-0"
@@ -33,7 +36,6 @@
     </button>
   </section>
 
-
   <!-- Popular Movies Section -->
   <section class="p-5 position-relative">
     <div class="d-flex align-items-center justify-content-between mb-4">
@@ -42,28 +44,25 @@
     </div>
     <div class="row">
       <div *ngFor="let movie of popularMovies" class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
-        <app-movie-card
-          [movie]="movie"
-          [imageUrl]="'https://image.tmdb.org/t/p/original' + movie.backdrop_path"
-          (cardClick)="goToMovieDetails($event)"
-          >
+        <app-movie-card [movie]="movie" [imageUrl]="'https://image.tmdb.org/t/p/original' + movie.backdrop_path"
+          (cardClick)="goToMovieDetails($event)">
         </app-movie-card>
       </div>
     </div>
     <!-- Navigation buttons -->
     <div class="position-absolute w-100 top-50 start-0 d-flex justify-content-between px-3"
       style="transform: translateY(-50%);">
-      <button class="btn btn-dark rounded-circle opacity-75 hover-opacity-100"
-        (click)="prevPopular()" [disabled]="popularPage === 0">
+      <button class="btn btn-dark rounded-circle opacity-75 hover-opacity-100" (click)="prevPopular()"
+        [disabled]="popularPage === 0">
         <i class="bi bi-chevron-left"></i>
       </button>
-      <button class="btn btn-dark rounded-circle opacity-75 hover-opacity-100"
-        (click)="nextPopular()"
+      <button class="btn btn-dark rounded-circle opacity-75 hover-opacity-100" (click)="nextPopular()"
         [disabled]="(popularPage + 1) * pageSize >= allPopularMovies.length">
         <i class="bi bi-chevron-right"></i>
       </button>
     </div>
   </section>
+
   <!-- Top Rated Movies Section -->
   <section class="p-5 position-relative">
     <div class="d-flex align-items-center justify-content-between mb-4">
@@ -72,23 +71,19 @@
     </div>
     <div class="row">
       <div *ngFor="let movie of topRatedMovies" class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
-        <app-movie-card
-          [movie]="movie"
-          [imageUrl]="'https://image.tmdb.org/t/p/original' + movie.backdrop_path"
-          (cardClick)="goToMovieDetails($event)"
-          >
+        <app-movie-card [movie]="movie" [imageUrl]="'https://image.tmdb.org/t/p/original' + movie.backdrop_path"
+          (cardClick)="goToMovieDetails($event)">
         </app-movie-card>
       </div>
     </div>
     <!-- Navigation buttons -->
     <div class="position-absolute w-100 top-50 start-0 d-flex justify-content-between px-3"
       style="transform: translateY(-50%);">
-      <button class="btn btn-dark rounded-circle opacity-75 hover-opacity-100"
-        (click)="prevTopRated()" [disabled]="topRatedPage === 0">
+      <button class="btn btn-dark rounded-circle opacity-75 hover-opacity-100" (click)="prevTopRated()"
+        [disabled]="topRatedPage === 0">
         <i class="bi bi-chevron-left"></i>
       </button>
-      <button class="btn btn-dark rounded-circle opacity-75 hover-opacity-100"
-        (click)="nextTopRated()"
+      <button class="btn btn-dark rounded-circle opacity-75 hover-opacity-100" (click)="nextTopRated()"
         [disabled]="(topRatedPage + 1) * pageSize >= allTopRatedMovies.length">
         <i class="bi bi-chevron-right"></i>
       </button>

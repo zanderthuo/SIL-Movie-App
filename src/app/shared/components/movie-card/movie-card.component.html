@@ -1,13 +1,19 @@
-<div class="card bg-dark text-white border-0 rounded-lg shadow-lg cursor-pointer"
+<div class="card bg-dark text-white border-0 rounded-lg shadow-lg"
+     style="cursor:pointer;" tabindex="0" role="button"
      (click)="onCardClick()">
-  <img *ngIf="imageUrl; else placeholder"
-       [src]="imageUrl"
-       class="card-img-top rounded-lg"
-       alt="{{ movie?.title }}">
+
+  <!-- Movie Poster -->
+  <ng-container *ngIf="movie?.poster_path; else placeholder">
+    <img
+      [src]="'https://image.tmdb.org/t/p/w300' + movie?.poster_path"
+      class="card-img-top rounded-lg"
+      alt="{{ movie?.title }}">
+  </ng-container>
   <ng-template #placeholder>
-    <img src="https://placehold.co/300x450/1C1C1C/FFF?text=No+Image"
-         class="card-img-top rounded-lg"
-         alt="No image available">
+    <img
+      src="https://placehold.co/300x450/1C1C1C/FFF?text=No+Image"
+      class="card-img-top rounded-lg"
+      alt="No image available">
   </ng-template>
 
   <div class="card-body p-2">
@@ -15,6 +21,19 @@
     <div class="d-flex align-items-center text-xs text-secondary mb-2">
       <i class="bi bi-star-fill text-warning me-1"></i>
       <span class="movie-rating">{{ movie?.vote_average }}</span>
+    </div>
+
+    <!-- Movie Options -->
+    <div *ngIf="movie?.options?.length" class="d-flex gap-2 mt-2">
+      <button *ngFor="let option of movie?.options"
+              type="button"
+              class="btn btn-sm btn-outline-light d-flex align-items-center gap-1">
+        <ng-container [ngSwitch]="option">
+          <i *ngSwitchCase="'Watch options'" class="bi bi-play-fill"></i>
+          <i *ngSwitchCase="'Trailer'" class="bi bi-play-btn-fill"></i>
+        </ng-container>
+        {{ option }}
+      </button>
     </div>
   </div>
 </div>

@@ -1,8 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
 import * as MoviesActions from './movies.actions';
-import { Movie } from '../../../core/models/movie.model';
+import { Cast, Crew, Movie } from '../../../core/models/movie.model';
 
 export interface MoviesState {
+  movie: Movie;
   movies: Movie[];
   loading: boolean;
   error: string | null;
@@ -10,6 +11,10 @@ export interface MoviesState {
 
 export const initialState: MoviesState = {
   movies: [],
+  movie: {
+    id: 0,
+    credits: undefined
+  },
   loading: false,
   error: null,
 };
@@ -83,6 +88,118 @@ export const topRatedMoviesReducer = createReducer(
 
   // Failure
   on(MoviesActions.loadTopRatedMoviesFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  }))
+);
+
+export const movieDetailsReducer = createReducer(
+  {
+    movie: null as Movie | null,
+    loading: false,
+    error: null as string | null,
+  },
+
+  // Start loading movie details
+  on(MoviesActions.loadMovieDetails, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  // Success
+  on(MoviesActions.loadMovieDetailsSuccess, (state, { movie }) => ({
+    ...state,
+    movie,
+    loading: false,
+  })),
+
+  // Failure
+  on(MoviesActions.loadMovieDetailsFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  }))
+);
+
+export const movieCastDetailsReducer = createReducer(
+  {
+    cast: [] as Cast[],
+    loading: false,
+    error: null as string | null,
+  },
+
+  // Start loading movie cast details
+  on(MoviesActions.loadMovieCastDetails, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  // Success
+  on(MoviesActions.loadMovieCastDetailsSuccess, (state, { cast }) => ({
+    ...state,
+    cast,
+    loading: false,
+  })),
+
+  // Failure
+  on(MoviesActions.loadMovieCastDetailsFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  }))
+);
+
+export const movieCrewDetailsReducer = createReducer(
+  {
+    crew: [] as Crew[],
+    loading: false,
+    error: null as string | null,
+  },
+
+  // Start loading movie crew details
+  on(MoviesActions.loadMovieCrewDetails, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  // Success
+  on(MoviesActions.loadMovieCrewDetailsSuccess, (state, { crew }) => ({
+    ...state,
+    crew,
+    loading: false,
+  })),
+
+  // Failure
+  on(MoviesActions.loadMovieCrewDetailsFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  }))
+);
+
+export const searchMoviesReducer = createReducer(
+  initialState,
+
+  // Start searching movies
+  on(MoviesActions.searchMovies, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  // Success
+  on(MoviesActions.searchMoviesSuccess, (state, { movies }) => ({
+    ...state,
+    movies,
+    loading: false,
+  })),
+
+  // Failure
+  on(MoviesActions.searchMoviesFailure, (state, { error }) => ({
     ...state,
     loading: false,
     error,

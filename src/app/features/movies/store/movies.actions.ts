@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Movie } from '../../../core/models/movie.model';
+import { Cast, Crew, Movie } from '../../../core/models/movie.model';
 
 export const loadMovies = createAction('[Movies] Load Trending Movies');
 
@@ -40,3 +40,65 @@ export const loadTopRatedMoviesFailure = createAction(
   props<{ error: string }>()
 );
 
+
+export const loadMovieDetails = createAction(
+  '[Movies] Load Movie Details',
+  props<{ movieId: number }>()
+);
+
+export const loadMovieDetailsSuccess = createAction(
+  '[Movies] Load Movie Details Success',
+  props<{ movie: Movie }>()
+);
+
+export const loadMovieDetailsFailure = createAction(
+  '[Movies] Load Movie Details Failure',
+  props<{ error: string }>()
+);
+
+export const loadMovieCastDetails = createAction(
+  '[Movies] Load Movie Cast Details',
+  props<{ movieId: number }>()
+);
+
+export const loadMovieCastDetailsSuccess = createAction(
+  '[Movies] Load Movie Cast Details Success',
+  props<{ cast: Cast[] }>()
+);
+
+export const loadMovieCastDetailsFailure = createAction(
+  '[Movies] Load Movie Cast Details Failure',
+  props<{ error: string }>()
+);
+
+export const loadMovieCrewDetails = createAction(
+  '[Movies] Load Movie Crew Details',
+  props<{ movieId: number }>()
+);
+
+export const loadMovieCrewDetailsSuccess = createAction(
+  '[Movies] Load Movie Crew Details Success',
+  props<{ crew: Crew[] }>()
+);
+
+export const loadMovieCrewDetailsFailure = createAction(
+  '[Movies] Load Movie Crew Details Failure',
+  props<{ error: string }>()
+);
+
+export const searchMovies = createAction(
+  '[Movies] Search Movies',
+  props<{ query: string }>()
+);
+
+export const searchMoviesSuccess = createAction(
+  '[Movies] Search Movies Success',
+  props<{ movies: Movie[] }>()
+);
+
+export const searchMoviesFailure = createAction(
+  '[Movies] Search Movies Failure',
+  props<{ error: string }>()
+);
+
+export const clearSearchResults = createAction('[Movies] Clear Search Results');

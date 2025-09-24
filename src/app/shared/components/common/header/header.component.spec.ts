@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { provideMockStore } from '@ngrx/store/testing';
 import { HeaderComponent } from './header.component';
 
 describe('HeaderComponent', () => {
@@ -8,7 +9,14 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeaderComponent]
+      imports: [HeaderComponent],
+      providers: [
+        provideMockStore({
+          initialState: {
+            searchResults: { movies: [], loading: false, error: null } // 👈 adjust to your feature state shape
+          }
+        })
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(HeaderComponent);
@@ -25,10 +33,10 @@ describe('HeaderComponent', () => {
     expect(brand.textContent.trim()).toBe('IdMB');
   });
 
-  it('should have a search input with placeholder "Search IMDb"', () => {
+  it('should have a search input with placeholder "Search IdMB"', () => {
     const searchInput = fixture.debugElement.query(By.css('input[type="search"]')).nativeElement;
     expect(searchInput).toBeTruthy();
-    expect(searchInput.getAttribute('placeholder')).toBe('Search IMDb');
+    expect(searchInput.getAttribute('placeholder')).toBe('Search IdMB');
   });
 
   it('should render a dropdown with options Movies, TV Shows, and Celebrities', () => {

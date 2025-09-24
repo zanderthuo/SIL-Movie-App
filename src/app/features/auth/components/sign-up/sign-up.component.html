@@ -1,0 +1,64 @@
+<div class="container-fluid bg-light min-vh-100 d-flex flex-column justify-content-center align-items-center">
+  <!-- IMDb Logo -->
+  <div class="mb-3">
+    <a class="navbar-brand bg-warning text-dark fw-bold px-5 rounded" href="#">
+      IdMB
+    </a>
+  </div>
+
+  <!-- Form Card -->
+  <div class="card shadow-sm" style="width: 350px;">
+    <div class="card-body">
+      <h5 class="card-title mb-3 text-center">Create account</h5>
+
+      <form (ngSubmit)="onSubmit()">
+        <!-- Name -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Your name</label>
+          <input type="text" class="form-control" id="name" [(ngModel)]="formData.name" name="name"
+                 placeholder="First and last name" required>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" [(ngModel)]="formData.email" name="email" required>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" [(ngModel)]="formData.password" name="password"
+                 minlength="8" placeholder="At least 8 characters" required>
+          <small class="text-muted">Passwords must be at least 8 characters.</small>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label">Re-enter password</label>
+          <input type="password" class="form-control" id="confirmPassword"
+                 [(ngModel)]="formData.confirmPassword" name="confirmPassword" required>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-grid">
+          <button type="submit" class="btn btn-warning">Create your IMDb account</button>
+        </div>
+      </form>
+
+      <div class="text-center mt-3">
+        <small>Already have an account? <a href="#">Sign in</a></small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-4 text-center">
+    <small>
+      <a href="#">Help</a> •
+      <a href="#">Conditions of Use</a> •
+      <a href="#">Privacy Notice</a><br>
+      © 1996-2025, Amazon.com, Inc. or its affiliates
+    </small>
+  </footer>
+</div>

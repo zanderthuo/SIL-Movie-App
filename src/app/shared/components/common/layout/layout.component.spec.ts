@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { provideMockStore } from '@ngrx/store/testing';  // 👈 import mock store
 import { LayoutComponent } from './layout.component';
 
 describe('LayoutComponent', () => {
@@ -8,7 +9,10 @@ describe('LayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LayoutComponent]
+      imports: [LayoutComponent],
+      providers: [
+        provideMockStore({ initialState: {} })  // 👈 add this
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(LayoutComponent);

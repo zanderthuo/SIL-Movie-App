@@ -57,4 +57,73 @@ export class MoviesEffects {
       )
     )
   );
+
+  loadMovieDetails$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MoviesActions.loadMovieDetails),
+      mergeMap((action) =>
+        this.moviesService.getMovieDetails(action.movieId).pipe(
+          map((movie) =>
+            MoviesActions.loadMovieDetailsSuccess({ movie })
+          ),
+          catchError((err) =>
+            of(MoviesActions.loadMovieDetailsFailure({ error: err.message }))
+          )
+        )
+      )
+    )
+  );
+
+  loadMovieCastDetails$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(MoviesActions.loadMovieCastDetails),
+    mergeMap((action) =>
+      this.moviesService.getCastDetails(action.movieId).pipe(
+        // API returns an object with { cast: Cast[], crew: Crew[] }
+        map((res) =>
+          MoviesActions.loadMovieCastDetailsSuccess({ cast: res.cast })
+        ),
+        catchError((err) =>
+          of(MoviesActions.loadMovieCastDetailsFailure({ error: err.message }))
+        )
+      )
+    )
+  )
+);
+
+
+  loadMovieCrewDetails$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(MoviesActions.loadMovieCrewDetails),
+    mergeMap((action) =>
+      this.moviesService.getCastDetails(action.movieId).pipe(
+        // API returns an object with { cast: Cast[], crew: Crew[] }
+        map((res) =>
+          MoviesActions.loadMovieCrewDetailsSuccess({ crew: res.crew })
+        ),
+        catchError((err) =>
+          of(MoviesActions.loadMovieCrewDetailsFailure({ error: err.message }))
+        )
+      )
+    )
+  )
+);
+
+
+  searchMovies$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MoviesActions.searchMovies),
+      mergeMap((action) =>
+        this.moviesService.searchMovies(action.query).pipe(
+          map((res) =>
+            MoviesActions.searchMoviesSuccess({ movies: res.results })
+          ),
+          catchError((err) =>
+            of(MoviesActions.searchMoviesFailure({ error: err.message }))
+          )
+        )
+      )
+    )
+  );
+
 }

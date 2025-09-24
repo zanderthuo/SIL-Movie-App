@@ -1,0 +1,7 @@
+section {
+  color: white;
+}
+
+.card img {
+  object-fit: cover;
+}

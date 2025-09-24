@@ -37,11 +37,12 @@ describe('MoviesService', () => {
       total_results: 100,
     };
 
-    service.getTrendingMovies().subscribe((res: { page: any; results: string | any[]; }) => {
+    service.getTrendingMovies().subscribe((res: MovieResponse) => {
       expect(res.page).toBe(1);
       expect(res.results.length).toBe(1);
       expect(res.results[0].title).toBe('Movie A');
     });
+
 
     const req = httpMock.expectOne(
       `${environment.apiUrl}/trending/movie/week?api_key=${environment.apiKey}&page=1`
